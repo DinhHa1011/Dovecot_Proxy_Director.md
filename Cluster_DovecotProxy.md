@@ -5,5 +5,7 @@
 `proxy_maybe=yes`
 - Dovecot checks xem bản thân Dovecot có được liệt kê trong thuộc tính host của người dùng không. Nếu đúng như vậy, kết nối được phục vụ cục bộ như bình thường. Nếu một máy chủ khác được liệt kê, kết nối POP3/IMAP/LMTP được chuyển tiếp tới host này như một connect TCP/IP. Do đó, proxy_maybe cho phép Dovecot đồng thời trở thành proxy server và backend server ("automatic proxying")
 ![](https://hackmd.io/_uploads/SyUEKvT83.png)
+
 `proxy=yes`
+
 - Trong trường hợp này, Dovecot luôn forwards connect tới server đã liệt kê trong thuộc tính host. Nếu Dovecot server được chỉ định ở đó, điều này sẽ dẫn đến một vòng lặp vô tận và không thể login. 

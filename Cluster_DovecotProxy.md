@@ -1,0 +1,1 @@
+- Trong các thiết lập lớn => không phải mọi server đều có quyền truy cập vào tất cả các email - đơn giản vì số lượng lớn người dùng 

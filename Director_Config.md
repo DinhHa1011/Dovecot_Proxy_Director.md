@@ -8,10 +8,10 @@
 - Từ smartphone đăng nhập mail trên director 2 
 - Do các director truyền đạt trạng thái cho nhau (ring) nên director 2 chuyển hướng xử lý về backend 1
 #### Hoạt động theo đúng lý thuyết
-- AH login vào RCB director 45.124.93.82 trỏ kết nối về 39
-- AH login vào RCB director 45.124.93.39 trỏ kết nối về đúng 39 trước đó đang xử lí
+- AH login vào RCB director 82 trỏ kết nối về 39
+- AH login vào RCB director 39 trỏ kết nối về đúng 39 trước đó đang xử lí
 ### My config
-- Config director trên ip 45.124.93.82
+- Config director trên ip 82
 `vim /etc/dovecot/conf.d/10-director`
 ```
 service director {
@@ -29,8 +29,8 @@ service director {
     port = 9090
   }
 }
-director_servers = 45.124.93.82
-director_mail_servers = 45.124.93.39 103.56.160.210
+director_servers = ...82
+director_mail_servers = ...39 ...210
 service imap-login {
   executable = imap-login director
 }
@@ -54,8 +54,8 @@ passdb {
   args = proxy=y nopassword=y
 }
 ```
-- Cài roundcube trên ip 45.124.93.82 (http://45.124.93.82/mail)
-- Login user trên rcb http://45.124.93.82/mail
-  - Khi login, user sẽ được chia về 1 trong 2 ip 45.124.93.39 hoặc 103.56.160.210
-  - Nếu được chia về 45.124.93.39 => login được trên http://45.124.93.82/mail
-  - Nếu được chia về 103.56.160.210 => không login được trên http://45.124.93.82/mail => vẫn login trên 45.124.93.39 và gửi nhận mail bình thường
+- Cài roundcube trên ip ...82 (http://...82/mail)
+- Login user trên rcb http://...82/mail
+  - Khi login, user sẽ được chia về 1 trong 2 ip ...39 hoặc ...210
+  - Nếu được chia về ...39 => login được trên http://...82/mail
+  - Nếu được chia về ...210 => không login được trên http://...82/mail => vẫn login trên ...39 và gửi nhận mail bình thường

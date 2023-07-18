@@ -130,7 +130,7 @@ sudo systemctl restart dovecot postfix
 ## Director Server
 - Cấu hình như mail server bình thương
 ### Những điểm khác:
-- Các file `virtual-domains.cf` `virtual-users.cf` `virtual-aliases.cf` `virtual-email2email.cf` phần `host` để về mysql chung `10.3.55.163` 
+- Các file `virtual-domains.cf` `virtual-users.cf` `virtual-aliases.cf` `virtual-email2email.cf` phần `host` để về mysql chung `imap-server1` 
 -  File `/etc/postfix/main.cf` `virtual_transport = lmtp:inet:127.0.0.1:24` 
 -  File `/etc/dovecot/dovecot.conf` thêm phần 
 ```

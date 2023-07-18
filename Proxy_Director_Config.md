@@ -1,9 +1,9 @@
 ![](https://hackmd.io/_uploads/r1qk2dXqh.jpg)
 # Concept
 - Mô hình gồm:
-  - 1 imap-director: 10.3.54.26
-  - 1 imap-proxy: 45.124.93.82
-  - 3 imap-server: imap-server1 (10.3.55.163), imap-server2 (10.3.55.76), imap-server3 (45.124.93.39)
+  - 1 imap-director
+  - 1 imap-proxy
+  - 3 imap-server: imap-server1, imap-server2, imap-server3 
   - mysql: imap-server1
 ## user
 | domain | email |
@@ -18,13 +18,13 @@
 ## proxy 
 | user | host |
 |------|------|
-| ah@dinhha.online | 10.3.53.226 |
-| ndt@dinhha.online | 10.3.54.26 |
-| ndt1@dinhha.online | 10.3.54.26 |
-| ndt2@dinhha.online | 10.3.54.26 |
-| kth@dinhha.online | 10.3.54.26 |
-| kth1@dinhha.online | 10.3.54.26 |
-| kth2@dinhha.online | 10.3.54.26 |
+| ah@dinhha.online | imap-server3 |
+| ndt@dinhha.online | director |
+| ndt1@dinhha.online | director |
+| ndt2@dinhha.online | director |
+| kth@dinhha.online | director |
+| kth1@dinhha.online | director |
+| kth2@dinhha.online | director |
 
 - login user từ proxy => proxy forward việc auth cho server tương ứng (có thể là server 3 hoặc director)
 - Nếu fw sang director => chia user sang các server khác nhau để loadbalance
@@ -36,7 +36,7 @@
 ### Một số điểm khác mailserver:
 - File `/etc/postfix/main.cf` `virtual_transport = lmtp:inet:127.0.0.1:24` thành như [này](https://raw.githubusercontent.com/anthanh264/linuxsetupbasic/main/Mail/main_lab_1.cf)
 - File `/etc/postfix/master.cf` thành như [này](https://raw.githubusercontent.com/anthanh264/linuxsetupbasic/main/Mail/master_lab1.cf)
-- Các file `virtual-domains.cf` `virtual-users.cf` `virtual-aliases.cf` `virtual-email2email.cf` phần `host` để về mysql chung `10.3.55.163`
+- Các file `virtual-domains.cf` `virtual-users.cf` `virtual-aliases.cf` `virtual-email2email.cf` phần `host` để về mysql chung `imap-server1`
 - Sửa file `/etc/dovecot/conf.d/20-lmtp.conf` 
 ```
 lmtp_proxy = yes
@@ -115,13 +115,13 @@ CREATE TABLE proxy (
 Thêm dữ liệu vào bảng
 ```
 INSERT INTO `proxy` (`user`, `host`, `destuser`) VALUES
-('ah@dinhha.online', '10.3.53.226', 'ah@dinhha.online'),
-('ndt@dinhha.online', '10.3.54.26', 'ndt@dinhha.online'),
-('ndt1@dinhha.online', '10.3.54.26', 'ndt1@dinhha.online'),
-('ndt2@dinhha.online', '10.3.54.26', 'ndt2@dinhha.online'),
-('kth@dinhha.online', '10.3.54.26', 'kth@dinhha.online'),
-('kth1@dinhha.online', '10.3.54.26', 'kth1@dinhha.online'),
-('kth2@dinhha.online', '10.3.54.26', 'kth2@dinhha.online');
+('ah@dinhha.online', 'imap-server3', 'ah@dinhha.online'),
+('ndt@dinhha.online', 'director', 'ndt@dinhha.online'),
+('ndt1@dinhha.online', 'director', 'ndt1@dinhha.online'),
+('ndt2@dinhha.online', 'director', 'ndt2@dinhha.online'),
+('kth@dinhha.online', 'director', 'kth@dinhha.online'),
+('kth1@dinhha.online', 'director', 'kth1@dinhha.online'),
+('kth2@dinhha.online', 'director', 'kth2@dinhha.online');
 ```
 - Restart dovecot postfix
 ```
@@ -136,7 +136,7 @@ sudo systemctl restart dovecot postfix
 ```
 service lmtp {
    inet_listener lmtp {
-      address = 10.3.54.26 127.0.0.1 ::1
+      address = ip-director 127.0.0.1 ::1
       port = 24
    }
    unix_listener lmtp {
@@ -188,8 +188,8 @@ service director {
     port = 9090
   }
 }
-director_servers = 10.3.54.26
-director_mail_servers = 10.3.55.76 10.3.55.163
+director_servers = ip-director
+director_mail_servers = imap-server2 imap-server1
 service imap-login {
   executable = imap-login director
 }
@@ -217,7 +217,7 @@ director_user_expire = 60 min
 ```
 service lmtp {
    inet_listener lmtp {
-      address = 10.3.55.163 127.0.0.1 ::1
+      address = imap-server1 127.0.0.1 ::1
       port = 24
    }
    unix_listener lmtp {
@@ -239,7 +239,7 @@ protocol lmtp {
 ```
 service lmtp {
    inet_listener lmtp {
-      address = 10.3.55.76 127.0.0.1 ::1
+      address = imap-server2 127.0.0.1 ::1
       port = 24
    }
    unix_listener lmtp {

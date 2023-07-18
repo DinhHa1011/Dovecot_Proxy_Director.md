@@ -256,3 +256,5 @@ lmtp_save_to_detail_mailbox = yes
 protocol lmtp {
 }
 ```
+### NFS
+- Host là imap-server 1 => sau đó share sang imap-server2

@@ -69,9 +69,9 @@ CREATE TABLE proxy (
 - Thêm dữ liệu vào bảng
 ```
 INSERT INTO `proxy` (`user`, `host`, `destuser`) VALUES
-('ah@dinhha.online', '45.124.93.39', 'ah@dinhha.online'),
-('ha@dinhha.online', '45.124.93.39', 'ha@dinhha.online'),
-('hadt@dinhha.online', '10.3.55.163', 'hadt@dinhha.online');
+('ah@dinhha.online', '...39', 'ah@dinhha.online'),
+('ha@dinhha.online', '...39', 'ha@dinhha.online'),
+('hadt@dinhha.online', '...163', 'hadt@dinhha.online');
 ```
 ```
 exit

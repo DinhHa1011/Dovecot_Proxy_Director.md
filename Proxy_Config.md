@@ -57,7 +57,7 @@ password_query = SELECT NULL AS password, 'Y' as nopassword, host, destuser, 'Y'
 mysql -u root -p
 use maildb;
 ```
-- Tạo bảng Proxy
+### Tạo bảng Proxy
 ```
 CREATE TABLE proxy (
   user varchar(255) NOT NULL,

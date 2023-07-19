@@ -34,8 +34,8 @@
 ## Proxy server
 - Cấu hình như một mail server
 ### Một số điểm khác mailserver:
-- File `/etc/postfix/main.cf` `virtual_transport = lmtp:inet:ip-local-proxy:24` thành như [này](https://raw.githubusercontent.com/anthanh264/linuxsetupbasic/main/Mail/main_lab_1.cf)
-- File `/etc/postfix/master.cf` thành như [này](https://raw.githubusercontent.com/anthanh264/linuxsetupbasic/main/Mail/master_lab1.cf)
+- File `/etc/postfix/main.cf` `virtual_transport = lmtp:inet:ip-local-proxy:24` 
+- File `/etc/postfix/master.cf` 
 - Các file `virtual-domains.cf` `virtual-users.cf` `virtual-aliases.cf` `virtual-email2email.cf` phần `host` để về mysql chung `imap-server1`
 - Sửa file `/etc/dovecot/conf.d/20-lmtp.conf` 
 ```

@@ -34,7 +34,7 @@
 ## Proxy server
 - Cấu hình như một mail server
 ### Một số điểm khác mailserver:
-- File `/etc/postfix/main.cf` `virtual_transport = lmtp:inet:127.0.0.1:24` thành như [này](https://raw.githubusercontent.com/anthanh264/linuxsetupbasic/main/Mail/main_lab_1.cf)
+- File `/etc/postfix/main.cf` `virtual_transport = lmtp:inet:ip-local-proxy:24` thành như [này](https://raw.githubusercontent.com/anthanh264/linuxsetupbasic/main/Mail/main_lab_1.cf)
 - File `/etc/postfix/master.cf` thành như [này](https://raw.githubusercontent.com/anthanh264/linuxsetupbasic/main/Mail/master_lab1.cf)
 - Các file `virtual-domains.cf` `virtual-users.cf` `virtual-aliases.cf` `virtual-email2email.cf` phần `host` để về mysql chung `imap-server1`
 - Sửa file `/etc/dovecot/conf.d/20-lmtp.conf` 
@@ -63,7 +63,7 @@ protocols = imap pop3 lmtp submission
 listen = *
 service lmtp {
    inet_listener lmtp {
-      address = 0.0.0.0
+      address = ip-local-proxy
       port = 24
    }
 #   proxy = yes
@@ -131,12 +131,11 @@ sudo systemctl restart dovecot postfix
 - Cấu hình như mail server bình thương
 ### Những điểm khác:
 - Các file `virtual-domains.cf` `virtual-users.cf` `virtual-aliases.cf` `virtual-email2email.cf` phần `host` để về mysql chung `imap-server1` 
--  File `/etc/postfix/main.cf` `virtual_transport = lmtp:inet:127.0.0.1:24` 
 -  File `/etc/dovecot/dovecot.conf` thêm phần 
 ```
 service lmtp {
    inet_listener lmtp {
-      address = ip-director 127.0.0.1 ::1
+      address = ip-director 
       port = 24
    }
    unix_listener lmtp {
@@ -217,7 +216,7 @@ director_user_expire = 60 min
 ```
 service lmtp {
    inet_listener lmtp {
-      address = imap-server1 127.0.0.1 ::1
+      address = imap-server1 
       port = 24
    }
    unix_listener lmtp {
@@ -239,7 +238,7 @@ protocol lmtp {
 ```
 service lmtp {
    inet_listener lmtp {
-      address = imap-server2 127.0.0.1 ::1
+      address = imap-server2 
       port = 24
    }
    unix_listener lmtp {

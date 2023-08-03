@@ -81,7 +81,7 @@ dict {
 !include_try local.conf
 
 ```
-- File `/etc/dovecot/dovecot-sql.conf`
+- File `/etc/dovecot/dovecot-sql.conf.ext`
 ```
 # Database driver: mysql, pgsql
 driver = mysql
